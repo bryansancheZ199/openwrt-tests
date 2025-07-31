@@ -35,6 +35,7 @@ sudo apt-get -y install \
     qemu-system-x86 \
     qemu-system-aarch64 \
     make
+sudo uv install pytest-reportportal
 ```
 
 Verify the installation by running the tests:
