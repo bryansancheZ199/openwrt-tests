@@ -71,7 +71,14 @@ pytest tests/ \
     --log-cli-level=CONSOLE \
     --lg-colored-steps \
     --firmware ../../openwrt/bin/targets/malta/be/openwrt-malta-be-vmlinux-initramfs.elf
+    --reportportal
+    --rp-launch="name_of_test"
 ```
+After finishing you can review the results of the tests at: https://tests.aparcar.org/ui/#openwrt/launches/all
+credentials: 
+username: User
+password: Openwrt.user1
+
 
 ## Writing tests
 
@@ -146,3 +153,4 @@ Lastly, unlock your device when you're done:
 ```shell
 uv run labgrid-client unlock
 ```
+C
