@@ -35,7 +35,7 @@ sudo apt-get -y install \
     qemu-system-x86 \
     qemu-system-aarch64 \
     make \
-    uv \
+    uv 
 uv pip install pytest-reportportal
 ```
 
