@@ -34,8 +34,9 @@ sudo apt-get -y install \
     qemu-system-mips \
     qemu-system-x86 \
     qemu-system-aarch64 \
-    make
-sudo uv install pytest-reportportal
+    make \
+    uv \
+uv pip install pytest-reportportal
 ```
 
 Verify the installation by running the tests:
@@ -70,9 +71,9 @@ pytest tests/ \
     --lg-log \
     --log-cli-level=CONSOLE \
     --lg-colored-steps \
-    --firmware ../../openwrt/bin/targets/malta/be/openwrt-malta-be-vmlinux-initramfs.elf
-    --reportportal
-    --rp-launch="name_of_test"
+    --firmware ../../openwrt/bin/targets/malta/be/openwrt-malta-be-vmlinux-initramfs.elf \
+    --reportportal \
+    -rp-launch="name_of_test" \
 ```
 After finishing you can review the results of the tests at: https://tests.aparcar.org/ui/#openwrt/launches/all
 credentials: 
@@ -153,4 +154,3 @@ Lastly, unlock your device when you're done:
 ```shell
 uv run labgrid-client unlock
 ```
-C
