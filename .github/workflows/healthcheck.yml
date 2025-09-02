@@ -19,7 +19,7 @@ jobs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       - name: Check out repository code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Generate matrix
         id: set-matrix
@@ -27,7 +27,9 @@ jobs:
           sudo wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/local/bin/yq &&\
               sudo chmod +x /usr/local/bin/yq
 
-          matrix=$(yq -o=json '
+          # Use pipe because of this bug
+          # https://github.com/mikefarah/yq/issues/2454
+          matrix=$(yq -o=json labnet.yaml | jq '
             . as $root |
             $root.labs as $labs |
             $root.devices as $devices |
@@ -37,22 +39,23 @@ jobs:
                 .key as $lab |
                 .value.devices
                 | map(
-                    select($devices[.] != null) |
+                    select($devices[.] != null and $devices[.].snapshots_only != true) |
                     {
                       "device": .,
                       "proxy": $labs[$lab].proxy,
                       "target": $devices[.].target,
                       "firmware": $devices[.].firmware,
-                      "maintainers": $labs[$lab].maintainers
+                      "maintainers": $labs[$lab].maintainers,
+                      "snapshots_only": ($devices[.].snapshots_only // false)
                     }
                   )
               )
             | flatten
-          ' labnet.yaml)
+          ')
           echo "matrix=$(echo "$matrix" | jq -c '.')" >> $GITHUB_OUTPUT
 
   test-real:
-    name: Device ${{ matrix.proxy }}/${{ matrix.device }}
+    name: ${{ matrix.device }} (${{ matrix.proxy }})
     needs: generate-matrix
     runs-on: global-coordinator
     strategy:
@@ -62,7 +65,7 @@ jobs:
 
     steps:
       - name: Check out repository code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Install uv
         uses: astral-sh/setup-uv@v6
@@ -80,15 +83,15 @@ jobs:
           export firmware=openwrt-${RELEASE}-${{ matrix.target }}-${{ matrix.device }}-${{ matrix.firmware }}
           export upstream_url="https://mirror-03.infra.openwrt.org/releases/${RELEASE}/targets"
 
-          mkdir -p /tmp/tftp/${{ matrix.device }}
+          mkdir -p $GITHUB_WORKSPACE/tftp/${{ matrix.device }}
           wget $upstream_url/${target/-/\/}/$firmware \
-            --output-document /tmp/tftp/${{ matrix.device }}/$firmware
-          (cd /tmp/tftp/ && gzip -d ${{ matrix.device }}/$firmware) || true
+            --output-document $GITHUB_WORKSPACE/tftp/${{ matrix.device }}/$firmware
+            (cd $GITHUB_WORKSPACE/tftp/ && gzip -d ${{ matrix.device }}/$firmware) || true
 
           FIRMWARE_VERSION=$(curl $upstream_url/${target/-/\/}/version.buildinfo)
           echo "FIRMWARE_VERSION=$FIRMWARE_VERSION" >> $GITHUB_ENV
 
-          echo "LG_IMAGE=/tmp/tftp/${{ matrix.device }}/${firmware/.gz/}" >> $GITHUB_ENV
+          echo "LG_IMAGE=$GITHUB_WORKSPACE/tftp/${{ matrix.device }}/${firmware/.gz/}" >> $GITHUB_ENV
           echo "LG_PROXY=${{ matrix.proxy }}" >> $GITHUB_ENV
 
       - name: Wait for free device

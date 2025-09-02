@@ -39,6 +39,18 @@ devices:
     target: mvebu-cortexa9
     firmware: initramfs-kernel.bin
 
+  xunlong_orangepi-zero2:
+    name: Orange Pi Zero2
+    target: sunxi-cortexa53
+    firmware: initramfs-kernel.bin
+    snapshots_only: true
+
+  pine64_pine64-plus:
+    name: Pine64 Plus
+    target: sunxi-cortexa53
+    firmware: initramfs-kernel.bin
+    snapshots_only: true
+
   bananapi_bpi-r4:
     name: Bananapi BPi-R4
     target: mediatek-filogic
@@ -69,6 +81,11 @@ devices:
     target: mpc85xx-p1020
     firmware: initramfs-kernel.bin
 
+  iei_puzzle-m902:
+    name: iEi Puzzle-M902
+    target: mvebu-cortexa72
+    firmware: initramfs-kernel.bin
+
 labs:
   labgrid-aparcar:
     proxy: labgrid-aparcar
@@ -79,7 +96,6 @@ labs:
       - genexis_pulse-ex400
       - bananapi_bpi-r4
       - glinet_gl-mt6000
-      - rpi-4
       - enterasys_ws-ap3710i
     developers:
       - aparcar
@@ -118,9 +134,20 @@ labs:
     devices:
       - genexis_pulse-ex400
       - bananapi_bpi-r64
+      - bananapi_bpi-r4
+      - iei_puzzle-m902
     developers:
       - aparcar
       - jonasjelonek
+
+  labgrid-wigyori:
+    proxy: labgrid-wigyori
+    maintainers: "@wigyori"
+    devices:
+      - pine64_pine64-plus
+      - xunlong_orangepi-zero2
+    developers:
+      - wigyori
 
 developers:
   aparcar:
@@ -129,3 +156,5 @@ developers:
     sshkey: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDe6tUbVJW3bYUVCYyQQFpNrJ1wP5kzvEkCruSjyA6TM
   jonasjelonek:
     sshkey: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDy4T0osxR8yS4RjJcsMn3rSacKvNzu+ZRNfe2lXTSHS
+  wigyori:
+    sshkey: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG8vcHMKcl6W6OuzSdjOhQ0ZehtH+McjLB7WzgP9P4Ls
