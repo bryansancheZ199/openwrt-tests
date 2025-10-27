@@ -10,6 +10,7 @@ labgrid-hsn-genexis_pulse-ex400:
   TFTPProvider:
     internal: "/srv/tftp/genexis_pulse-ex400/"
     external: "genexis_pulse-ex400/"
+    external_ip: 192.168.104.1
   NetworkService:
     address: "192.168.1.1%vlan104"
     username: "root"
@@ -37,8 +38,8 @@ labgrid-hsn-bananapi_bpi-r4:
       ID_PATH: pci-0000:00:14.0-usb-0:1.1.2:1.0
   PDUDaemonPort:
     host: localhost:16421
-    pdu: 192.168.128.3
-    index: 3
+    pdu: 192.168.128.2
+    index: 5
   TFTPProvider:
     internal: "/srv/tftp/bananapi_bpi-r4"
     external: "bananapi_bpi-r4/"
@@ -58,6 +59,7 @@ labgrid-hsn-glinet_gl-mt1300:
   TFTPProvider:
     internal: "/srv/tftp/glinet_gl-mt1300"
     external: "glinet_gl-mt1300/"
+    external_ip: 192.168.108.1
   NetworkService:
     address: "192.168.1.1%vlan108"
     username: "root"
@@ -74,6 +76,7 @@ labgrid-hsn-linksys_e8450:
   TFTPProvider:
     internal: "/srv/tftp/linksys_e8450"
     external: "linksys_e8450/"
+    external_ip: 192.168.110.1
   NetworkService:
     address: "192.168.1.1%vlan110"
     username: "root"
@@ -90,6 +93,7 @@ labgrid-hsn-tplink_tl-wr1043nd-v4:
   TFTPProvider:
     internal: "/srv/tftp/tplink_tl-wr1043nd-v4"
     external: "tplink_tl-wr1043nd-v4/"
+    external_ip: 192.168.112.1
   NetworkService:
     address: "192.168.1.1%vlan112"
     username: "root"
@@ -106,6 +110,7 @@ labgrid-hsn-youku_yk-l1:
   TFTPProvider:
     internal: "/srv/tftp/youku_yk-l1"
     external: "youku_yk-l1"
+    external_ip: 192.168.114.1
   NetworkService:
     address: "192.168.1.1%vlan114"
     username: "root"
