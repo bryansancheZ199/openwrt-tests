@@ -110,7 +110,10 @@ labgrid-hsn-youku_yk-l1:
   TFTPProvider:
     internal: "/srv/tftp/youku_yk-l1"
     external: "youku_yk-l1"
+<<<<<<< HEAD:ansible/files/exporter/labgrid-hsn.yaml
     external_ip: 192.168.114.1
+=======
+>>>>>>> upstream/main:ansible/files/exporter/labgrid-hsn/exporter.yaml
   NetworkService:
     address: "192.168.1.1%vlan114"
     username: "root"
