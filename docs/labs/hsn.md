@@ -2,7 +2,8 @@
 
 ## Setup
 
-- **Model:** Zyxel GS1900-24HP
+- **Labgrid Model:** `Supermicro SYS-E302-9D`
+- **Labgrid OS:** `Ubuntu 25.04`
 - **Labgrid IP:** `192.168.128.1`
 
 - **Power Outlet 1 IP:** `192.168.128.3`
