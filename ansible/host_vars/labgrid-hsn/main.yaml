@@ -1,7 +1,10 @@
 ---
 
 vlans: 12
+vlan_interface: br0
 labnet_interfaces:
   - eno2
   - eno3
   - eno4
+
+netplan_custom: ""

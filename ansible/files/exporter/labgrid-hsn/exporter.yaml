@@ -98,22 +98,20 @@ labgrid-hsn-tplink_tl-wr1043nd-v4:
     address: "192.168.1.1%vlan112"
     username: "root"
 
-labgrid-hsn-youku_yk-l1:
+labgrid-hsn-buffalo_wsr-1166dhp:
   location: hsn-desk
   USBSerialPort:
     match:
       ID_PATH: pci-0000:00:14.0-usb-0:1.4:1.0
+    speed: 57600
   PDUDaemonPort:
     host: localhost:16421
     pdu: 192.168.128.2
     index: 13
   TFTPProvider:
-    internal: "/srv/tftp/youku_yk-l1"
-    external: "youku_yk-l1"
-<<<<<<< HEAD:ansible/files/exporter/labgrid-hsn.yaml
+    internal: "/srv/tftp/buffalo_wsr-1166dhp"
+    external: "buffalo_wsr-1166dhp"
     external_ip: 192.168.114.1
-=======
->>>>>>> upstream/main:ansible/files/exporter/labgrid-hsn/exporter.yaml
   NetworkService:
     address: "192.168.1.1%vlan114"
     username: "root"

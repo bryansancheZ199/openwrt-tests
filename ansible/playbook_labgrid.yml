@@ -278,31 +278,31 @@
       notify:
         - Restart dnsmasq
 
-    - name: Configure network with netplan
-      block:
-        - name: Stat host specific netplan configuration
-          ansible.builtin.stat:
-            path: files/exporter/{{ inventory_hostname }}/netplan.yaml
-          register: host_specific_netplan_conf
-          delegate_to: localhost
-          become: false
+    # - name: Configure network with netplan
+    #   block:
+    #     - name: Stat host specific netplan configuration
+    #       ansible.builtin.stat:
+    #         path: files/exporter/{{ inventory_hostname }}/netplan.yaml
+    #       register: host_specific_netplan_conf
+    #       delegate_to: localhost
+    #       become: false
 
-        - name: Configure netplan using host specific config
-          ansible.builtin.template:
-            src: files/exporter/{{ inventory_hostname }}/netplan.yaml
-            dest: /etc/netplan/labnet.yaml
-            mode: 0600
-            owner: root
-            group: root
-          when: host_specific_netplan_conf.stat.exists
+    #     - name: Configure netplan using host specific config
+    #       ansible.builtin.template:
+    #         src: files/exporter/{{ inventory_hostname }}/netplan.yaml
+    #         dest: /etc/netplan/labnet.yaml
+    #         mode: 0600
+    #         owner: root
+    #         group: root
+    #       when: host_specific_netplan_conf.stat.exists
 
-        - name: Configure netplan using default config
-          template:
-            src: files/exporter/netplan.yaml
-            dest: /etc/netplan/labnet.yaml
-          notify:
-            - Apply netplan
-          when: not host_specific_netplan_conf.stat.exists
+    #     - name: Configure netplan using default config
+    #       template:
+    #         src: files/exporter/netplan.yaml
+    #         dest: /etc/netplan/labnet.yaml
+    #       notify:
+    #         - Apply netplan
+    #       when: not host_specific_netplan_conf.stat.exists
 
     - name: Stat host specific dnsmasq configuration
       ansible.builtin.stat:

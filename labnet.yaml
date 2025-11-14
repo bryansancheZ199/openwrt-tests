@@ -126,6 +126,11 @@ devices:
     target: mediatek-mt7622
     firmware: initramfs-kernel.bin
 
+  buffalo_wsr-1166dhp:
+  name: Buffalo WSR-1166DHP
+  target: ramips-mt7621
+  firmware: initramfs-kernel.bin
+
 labs:
   labgrid-aparcar:
     proxy: labgrid-aparcar
@@ -180,6 +185,7 @@ labs:
       - glinet_gl-mt1300
       - linksys_e8450
       - tplink_tl-wr1043nd-v4
+      - buffalo_wsr-1166dhp
     developers:
       - aparcar
       - jonasjelonek
