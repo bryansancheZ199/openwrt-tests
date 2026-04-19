@@ -141,7 +141,7 @@ jobs:
 
               - **Proxy**: \`${{ matrix.proxy }}\`
               - **Device**: \`${{ matrix.device }}\`
-              - **Maintainers**: ${{ matrix.maintainers }}
+              - **Maintainers**: ${{ join(matrix.maintainers, ', ') }}
 
               has **failed**. Please review the logs and investigate the issue.
 

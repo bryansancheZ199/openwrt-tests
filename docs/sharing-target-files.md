@@ -14,7 +14,8 @@ devices:
 labs:
   labgrid-example:
     proxy: labgrid-example
-    maintainers: "@maintainer"
+    maintainers:
+      - "@maintainer"
     devices:
       - linksys_e8450
     device_instances:
