@@ -14,6 +14,7 @@ devices:
 labs:
   labgrid-example:
     proxy: labgrid-example
+    hostkey: ssh-ed25519 AAAA...
     maintainers:
       - "@maintainer"
     devices:

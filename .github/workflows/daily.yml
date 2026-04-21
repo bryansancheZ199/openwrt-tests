@@ -152,6 +152,7 @@ jobs:
       - name: Setup SSH connection to coordinator
         env:
           LABGRID_SSH_KEY: ${{ secrets.LABGRID_SSH_KEY }}
+          COORDINATOR_HOSTKEY: ${{ secrets.COORDINATOR_HOSTKEY }}
         run: |
           mkdir -p ~/.ssh
           echo "$LABGRID_SSH_KEY" > ~/.ssh/labgrid
@@ -163,16 +164,16 @@ jobs:
             Port ${{ secrets.COORDINATOR_PORT }}
             User labgrid-dev
             IdentityFile ~/.ssh/labgrid
-            StrictHostKeyChecking no
-            UserKnownHostsFile /dev/null
 
           Host labgrid-*
             User labgrid-dev
             IdentityFile ~/.ssh/labgrid
-            StrictHostKeyChecking no
-            UserKnownHostsFile /dev/null
             ProxyJump coordinator
           SSHEOF
+
+          echo "[${{ secrets.COORDINATOR_HOST }}]:${{ secrets.COORDINATOR_PORT }} $COORDINATOR_HOSTKEY" >> ~/.ssh/known_hosts
+          yq -r '.labs | to_entries[] | "\(.key) \(.value.hostkey)"' labnet.yaml >> ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
 
       - name: Set environment
         env:
