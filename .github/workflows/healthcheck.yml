@@ -72,6 +72,9 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v7
 
+      - name: Install nmap
+        run: sudo apt-get -y install nmap
+
       - name: Setup SSH connection to coordinator
         env:
           LABGRID_SSH_KEY: ${{ secrets.LABGRID_SSH_KEY }}
