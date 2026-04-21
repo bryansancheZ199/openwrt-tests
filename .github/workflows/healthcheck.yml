@@ -121,6 +121,9 @@ jobs:
           echo "LG_IMAGE=$GITHUB_WORKSPACE/tftp/${{ matrix.device }}/${firmware/.gz/}" >> $GITHUB_ENV
           echo "LG_PROXY=${{ matrix.proxy }}" >> $GITHUB_ENV
 
+      - name: Install dependencies
+        run: uv sync --all-extras --dev
+
       - name: Wait for free device
         run: |
           eval $(uv run labgrid-client reserve --wait --shell device=${{ matrix.device }})
