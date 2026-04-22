@@ -267,7 +267,7 @@ jobs:
         if: env.SKIP_TEST != 'true'
         run: |
           mkdir -p ${{ matrix.device }}-${{ matrix.version_name }}/
-          uv run pytest tests/ \
+          uv run pytest tests/ -v \
             --lg-log ${{ matrix.device }}-${{ matrix.version_name }}/ \
             --junitxml=${{ matrix.device }}-${{ matrix.version_name }}/report.xml \
             --lg-colored-steps \
@@ -372,7 +372,7 @@ jobs:
 
           mkdir -p ${{ matrix.target }}-${{ matrix.version_name }}
 
-          uv run pytest tests/ \
+          uv run pytest tests/ -v \
             --lg-log ${{ matrix.target }}-${{ matrix.version_name }}/ \
             --junitxml=${{ matrix.target }}-${{ matrix.version_name }}/report.xml \
             --lg-colored-steps \

@@ -71,7 +71,7 @@ jobs:
           gunzip $FIRMWARE_FILE || true
           firmware=${FIRMWARE_FILE/.gz/}
 
-          uv run pytest tests/ \
+          uv run pytest tests/ -v \
             --lg-log \
             --lg-colored-steps \
             --log-cli-level=CONSOLE \

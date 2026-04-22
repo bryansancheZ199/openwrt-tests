@@ -151,7 +151,7 @@ jobs:
       - name: Run test
         id: test
         run: |
-          uv run pytest tests/test_base.py::test_shell tests/test_base.py::test_ssh \
+          uv run pytest tests/test_base.py::test_shell tests/test_base.py::test_ssh -v \
             --lg-log \
             --lg-colored-steps \
             --log-cli-level=CONSOLE
