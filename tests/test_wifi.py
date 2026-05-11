@@ -1,3 +1,4 @@
+import re
 import time
 
 import pytest
@@ -43,10 +44,11 @@ def test_wifi_wpa3(ssh_command):
     iwinfo_output = "\n".join(ssh_command.run("iwinfo")[0])
 
     assert "Mode: Master" in iwinfo_output, f"iwinfo output:\n{iwinfo_output}"
-    assert (
-        "Encryption: WPA3 SAE (CCMP)" in iwinfo_output
-        or "Encryption: SAE (CCMP)" in iwinfo_output
-    ), f"iwinfo output:\n{iwinfo_output}"
+    # iwinfo has rendered this line as "WPA3 SAE (CCMP)", "SAE (CCMP)" and
+    # most recently "SAE / SAE-EXT-KEY (CCMP)"; accept any line that names SAE.
+    assert re.search(r"Encryption:.*\bSAE\b.*\(CCMP\)", iwinfo_output), (
+        f"iwinfo output:\n{iwinfo_output}"
+    )
 
 
 @pytest.mark.lg_feature("wifi")
