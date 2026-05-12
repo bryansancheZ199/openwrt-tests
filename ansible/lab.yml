@@ -102,6 +102,7 @@
         - Restart labgrid-exporter
         - Restart labgrid-coordinator
 
+
     - name: Install usbsdmux packages
       community.general.pipx:
         name: usbsdmux
@@ -114,7 +115,6 @@
       file:
         path: /etc/labgrid
         state: directory
-
 
     - name: Create tftp folder
       file:
@@ -163,7 +163,7 @@
         - name: Install pdudaemon via pipx
           community.general.pipx:
             name: pdudaemon
-            source: git+https://github.com/jonasjelonek/pdudaemon.git@main
+            source: git+https://github.com/pdudaemon/pdudaemon.git@main
             state: latest
           environment:
             PIPX_HOME: /opt/pipx/
@@ -194,7 +194,7 @@
             dest: /etc/pdudaemon/pdudaemon.conf
           notify:
             - Restart pdudaemon
-          when: host_specific_pdudaemon_conf.stat.exists
+          when: host_specific_pdudaemon_conf.stat.exists | default(false)
 
         - name: Otherwise use general config
           template:
@@ -202,7 +202,7 @@
             dest: /etc/pdudaemon/pdudaemon.conf
           notify:
             - Restart pdudaemon
-          when: not host_specific_pdudaemon_conf.stat.exists
+          when: not (host_specific_pdudaemon_conf.stat.exists | default(false))
 
         - name: Start and enable pdudaemon
           ansible.builtin.systemd_service:
@@ -237,7 +237,7 @@
             mode: 0600
             owner: root
             group: root
-          when: host_specific_netplan_conf.stat.exists
+          when: host_specific_netplan_conf.stat.exists | default(false)
 
         - name: Configure netplan using default config
           template:
@@ -245,7 +245,7 @@
             dest: /etc/netplan/labnet.yaml
           notify:
             - Apply netplan
-          when: not host_specific_netplan_conf.stat.exists
+          when: not (host_specific_netplan_conf.stat.exists | default(false))
 
     - name: Stat host specific dnsmasq configuration
       ansible.builtin.stat:
@@ -261,7 +261,7 @@
 
       notify:
         - Restart dnsmasq
-      when: host_specific_dnsmasq_conf.stat.exists
+      when: host_specific_dnsmasq_conf.stat.exists | default(false)
 
     - name: Configure dnsmasq using default config
       template:
@@ -269,7 +269,7 @@
         dest: /etc/dnsmasq.conf
       notify:
         - Restart dnsmasq
-      when: not host_specific_dnsmasq_conf.stat.exists
+      when: not (host_specific_dnsmasq_conf.stat.exists | default(false))
 
     - name: Start and enable dnsmasq
       service:
