@@ -1,8 +1,7 @@
-
 labgrid-bryan-buffalo_wsr-1166dhp:
   location: labgrid-bryan
   USBSerialPort:
-    port: '/dev/ttyUSB0'
+    port: "/dev/ttyUSB0"
     speed: 57600
   PDUDaemonPort:
     host: localhost:16421
@@ -35,14 +34,17 @@ labgrid-hsn-youku_yk-l1:
   location: labgrid-bryan
   USBSerialPort:
     port: '/dev/ttyUSB2'
+  location: labgrid-bryan
+  USBSerialPort:
+    port: "/dev/ttyUSB2"
     speed: 115200
   PDUDaemonPort:
     host: localhost:16421
     pdu: tasmota
-    index: 2
+    index: 3
   TFTPProvider:
     internal: "/srv/tftp/youku_yk-l1"
     external: "youku_yk-l1"
   NetworkService:
-    address: "192.168.1.1%vlan102"
+    address: "192.168.1.1%vlan105"
     username: "root"
