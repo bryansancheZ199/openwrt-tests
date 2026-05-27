@@ -13,3 +13,19 @@ labgrid-bryan-glinet_gl-mt6000:
   NetworkService:
     address: "192.168.1.1%vlan101"
     username: "root"
+
+labgrid-bryan-bananapi_bpi-r4:
+  location: hsn-desk
+  USBSerialPort:
+    port: "/dev/ttyUSB2"
+    speed: 115200
+  PDUDaemonPort:
+    host: localhost:16421
+    pdu: tasmota
+    index: 2
+  TFTPProvider:
+    internal: "/srv/tftp/bananapi_bpi-r4"
+    external: "bananapi_bpi-r4/"
+  NetworkService:
+    address: "192.168.1.1%vlan103"
+    username: "root"
