@@ -1,31 +1,15 @@
-labgrid-bryan-buffalo_wsr-1166dhp:
+labgrid-bryan-glinet_gl-mt6000:
   location: labgrid-bryan
   USBSerialPort:
-    port: "/dev/ttyUSB0"
-    speed: 57600
+    port: "/dev/ttyUSB1"
+    speed: 115200
   PDUDaemonPort:
     host: localhost:16421
     pdu: tasmota
     index: 1
   TFTPProvider:
-    internal: "/srv/tftp/buffalo_wsr-1166dhp"
-    external: "buffalo_wsr-1166dhp"
-  NetworkService:
-    address: "192.168.1.1%vlan101"
-    username: "root"
-
-labgrid-bryan-glinet_gl-mt6000:
-  location: labgrid-bryan
-  USBSerialPort:
-    port: "/dev/ttyUSB2"
-    speed: 115200
-  PDUDaemonPort:
-    host: localhost:16421
-    pdu: tasmota
-    index: 2
-  TFTPProvider:
     internal: "/srv/tftp/glinet_gl-mt6000"
     external: "glinet_gl-mt6000"
   NetworkService:
-    address: "192.168.1.1%vlan103"
+    address: "192.168.1.1%vlan101"
     username: "root"
