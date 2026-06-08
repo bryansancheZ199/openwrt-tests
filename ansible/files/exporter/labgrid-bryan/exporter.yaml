@@ -29,3 +29,19 @@ labgrid-bryan-bananapi_bpi-r4:
   NetworkService:
     address: "192.168.1.1%vlan103"
     username: "root"
+
+labgrid-bryan-teltonika_rut976:
+  location: labgrid-bryan
+  USBSerialPort:
+    port: "/dev/ttyUSB3"
+    speed: 115200
+  PDUDaemonPort:
+    host: localhost:16421
+    pdu: tasmota
+    index: 3
+  TFTPProvider:
+    internal: "/srv/tftp/teltonika_rut976"
+    external: "teltonika_rut976/"
+  NetworkService:
+    address: "192.168.1.1%vlan105"
+    username: "root"
