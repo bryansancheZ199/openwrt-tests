@@ -163,8 +163,9 @@
         - name: Install pdudaemon via pipx
           community.general.pipx:
             name: pdudaemon
-            source: git+https://github.com/pdudaemon/pdudaemon.git@main
+            source: git+https://github.com/pdudaemon/pdudaemon.git@1.1.1
             state: latest
+            force: true
           environment:
             PIPX_HOME: /opt/pipx/
             PIPX_BIN_DIR: /usr/local/bin
@@ -207,7 +208,7 @@
         - name: Start and enable pdudaemon
           ansible.builtin.systemd_service:
             name: pdudaemon
-            state: restarted
+            state: started
             enabled: yes
             daemon_reload: yes
 
