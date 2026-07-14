@@ -2,7 +2,6 @@ openwrt:
   name: IgniteNet SunSpot AC Wave2
   target: ipq806x-generic
   profile: ignitenet_ss-w2-ac2600
-  snapshots_only: true
 targets:
   main:
     features:
