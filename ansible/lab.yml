@@ -368,6 +368,68 @@
       tags:
         - udev
 
+    - name: Build and install CH348 USB-octal-serial kernel module
+      when: ch348_module_enabled | default(false) | bool
+      vars:
+        ch348_module_repo: "{{ ch348_module_repo_url | default('https://github.com/WCHSoftGroup/ch348ser_linux.git') }}"
+        ch348_module_version: "{{ ch348_module_ref | default('main') }}"
+        ch348_source_dir: /usr/src/ch348
+        ch348_module_path: "/lib/modules/{{ ansible_kernel }}/kernel/drivers/usb/serial/ch348.ko"
+      tags:
+        - ch348
+      block:
+        - name: Install CH348 build dependencies
+          apt:
+            name:
+              - dwarves
+              - "linux-headers-{{ ansible_kernel }}"
+            state: present
+
+        - name: Clone CH348 driver source
+          ansible.builtin.git:
+            repo: "{{ ch348_module_repo }}"
+            dest: "{{ ch348_source_dir }}"
+            version: "{{ ch348_module_version }}"
+            update: false
+          register: ch348_clone
+
+        - name: Check whether ch348.ko is already installed
+          ansible.builtin.stat:
+            path: "{{ ch348_module_path }}"
+          register: ch348_installed
+
+        - name: Build CH348 kernel module
+          ansible.builtin.command:
+            cmd: make
+            chdir: "{{ ch348_source_dir }}"
+          register: ch348_build
+          when: ch348_clone is changed or not ch348_installed.stat.exists
+          changed_when: ch348_build.rc == 0
+
+        - name: Install ch348.ko into kernel modules tree
+          ansible.builtin.copy:
+            src: "{{ ch348_source_dir }}/ch348.ko"
+            dest: "{{ ch348_module_path }}"
+            remote_src: true
+            mode: "0644"
+          register: ch348_install
+          when: ch348_build is changed
+
+        - name: Refresh module dependencies
+          ansible.builtin.command: depmod -a
+          when: ch348_install is changed
+
+        - name: Autoload ch348 at boot
+          ansible.builtin.copy:
+            content: "ch348\n"
+            dest: /etc/modules-load.d/ch348.conf
+            mode: "0644"
+
+        - name: Load ch348 module now
+          community.general.modprobe:
+            name: ch348
+            state: present
+
   handlers:
     - name: Restart labgrid-exporter
       systemd:
