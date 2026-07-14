@@ -1,10 +1,10 @@
 import enum
 import ipaddress
+from urllib.parse import urlparse
 
 import attr
 from labgrid.driver import TFTPProviderDriver
 from labgrid.factory import target_factory
-from labgrid.resource.remote import RemoteTFTPProvider
 from labgrid.strategy.common import Strategy, StrategyError
 
 
@@ -50,10 +50,20 @@ class UBootTFTPStrategy(Strategy):
             self.target.activate(self.tftp)
             self.target.activate(self.console)
 
-            staged_file = self.tftp.stage(self.target.env.config.get_image_path("root"))
-            tftp_server_ip = self.target.get_resource(
-                RemoteTFTPProvider, wait_avail=False
-            ).external_ip
+            staged = self.tftp.stage(self.target.env.config.get_image_path("root"))
+            parsed = urlparse(staged)
+
+            if parsed.scheme == "tftp":
+                # The exporter's TFTPProvider `external` is a full
+                # tftp://<host>/<path> URL: the host becomes serverip (and the
+                # DUT's ipaddr is derived from it), the path becomes bootfile.
+                staged_file = parsed.path.lstrip("/")
+                tftp_server_ip = parsed.hostname
+            else:
+                # Plain relative `external` path: no serverip is configured
+                # (the board's U-Boot env or DHCP is expected to provide it).
+                staged_file = staged
+                tftp_server_ip = None
 
             self.power.cycle()
             # interrupt uboot

@@ -6,8 +6,7 @@ labgrid-wigyori-olimex_a10-olinuxino-lime:
     speed: 115200
   TFTPProvider:
     internal: "/tftpboot/olimex_a10-olinuxino-lime"
-    external: "olimex_a10-olinuxino-lime"
-    external_ip: 192.168.101.1
+    external: "tftp://192.168.101.1/olimex_a10-olinuxino-lime"
   NetworkService:
     address: "192.168.1.1%eth0.201"
     username: "root"
@@ -24,8 +23,7 @@ labgrid-wigyori-olimex_a20-olinuxino-micro:
     speed: 115200
   TFTPProvider:
     internal: "/tftpboot/olimex_a20-olinuxino-micro"
-    external: "olimex_a20-olinuxino-micro"
-    external_ip: 192.168.102.1
+    external: "tftp://192.168.102.1/olimex_a20-olinuxino-micro"
   NetworkService:
     address: "192.168.1.1%eth0.202"
     username: "root"
@@ -42,8 +40,7 @@ labgrid-wigyori-xunlong_orangepi-2:
     speed: 115200
   TFTPProvider:
     internal: "/tftpboot/xunlong_orangepi-2"
-    external: "xunlong_orangepi-2"
-    external_ip: 192.168.103.1
+    external: "tftp://192.168.103.1/xunlong_orangepi-2"
   NetworkService:
     address: "192.168.1.1%eth0.203"
     username: "root"
@@ -60,8 +57,7 @@ labgrid-wigyori-xunlong_orangepi-zero2:
     speed: 115200
   TFTPProvider:
     internal: "/tftpboot/xunlong_orangepi-zero2"
-    external: "xunlong_orangepi-zero2"
-    external_ip: 192.168.104.1
+    external: "tftp://192.168.104.1/xunlong_orangepi-zero2"
   NetworkService:
     address: "192.168.1.1%eth0.204"
     username: "root"
@@ -78,8 +74,7 @@ labgrid-wigyori-linksprite_a10-pcduino:
     speed: 115200
   TFTPProvider:
     internal: "/tftpboot/linksprite_a10-pcduino"
-    external: "linksprite_a10-pcduino"
-    external_ip: 192.168.105.1
+    external: "tftp://192.168.105.1/linksprite_a10-pcduino"
   NetworkService:
     address: "192.168.1.1%eth0.205"
     username: "root"
@@ -96,8 +91,7 @@ labgrid-wigyori-pine64_pine64-plus:
     speed: 115200
   TFTPProvider:
     internal: "/tftpboot/pine64_pine64-plus"
-    external: "pine64_pine64-plus"
-    external_ip: 192.168.106.1
+    external: "tftp://192.168.106.1/pine64_pine64-plus"
   NetworkService:
     address: "192.168.1.1%eth0.206"
     username: "root"

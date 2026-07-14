@@ -9,8 +9,7 @@ labgrid-fcefyn-belkin_rt3200_1:
     index: 0
   TFTPProvider:
     internal: "/srv/tftp/belkin_rt3200_1/"
-    external: "belkin_rt3200_1/"
-    external_ip: "192.168.100.1"
+    external: "tftp://192.168.100.1/belkin_rt3200_1/"
   NetworkService:
     address: "192.168.1.1%vlan100"
     username: "root"
@@ -26,8 +25,7 @@ labgrid-fcefyn-belkin_rt3200_2:
     index: 1
   TFTPProvider:
     internal: "/srv/tftp/belkin_rt3200_2/"
-    external: "belkin_rt3200_2/"
-    external_ip: "192.168.101.1"
+    external: "tftp://192.168.101.1/belkin_rt3200_2/"
   NetworkService:
     address: "192.168.1.1%vlan101"
     username: "root"
@@ -43,8 +41,7 @@ labgrid-fcefyn-belkin_rt3200_3:
     index: 2
   TFTPProvider:
     internal: "/srv/tftp/belkin_rt3200_3/"
-    external: "belkin_rt3200_3/"
-    external_ip: "192.168.102.1"
+    external: "tftp://192.168.102.1/belkin_rt3200_3/"
   NetworkService:
     address: "192.168.1.1%vlan102"
     username: "root"
@@ -60,8 +57,7 @@ labgrid-fcefyn-bananapi_bpi-r4:
     index: 3
   TFTPProvider:
     internal: "/srv/tftp/bananapi_bpi-r4/"
-    external: "bananapi_bpi-r4/"
-    external_ip: "192.168.103.1"
+    external: "tftp://192.168.103.1/bananapi_bpi-r4/"
   NetworkService:
     address: "192.168.1.1%vlan103"
     username: "root"
@@ -77,8 +73,7 @@ labgrid-fcefyn-openwrt_one:
     index: 1
   TFTPProvider:
     internal: "/srv/tftp/openwrt_one/"
-    external: "openwrt_one/"
-    external_ip: "192.168.104.1"
+    external: "tftp://192.168.104.1/openwrt_one/"
   NetworkService:
     address: "192.168.1.1%vlan104"
     username: "root"
@@ -94,8 +89,7 @@ labgrid-fcefyn-librerouter_1:
     index: 4
   TFTPProvider:
     internal: "/srv/tftp/librerouter_1/"
-    external: "librerouter_1/"
-    external_ip: "192.168.105.1"
+    external: "tftp://192.168.105.1/librerouter_1/"
   NetworkService:
     address: "192.168.1.1%vlan105"
     username: "root"

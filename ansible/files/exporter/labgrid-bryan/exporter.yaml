@@ -72,7 +72,7 @@ labgrid-bryan-gemtek_w1700k-ubi:
     index: 4
   TFTPProvider:
     internal: "/srv/tftp/gemtek_w1700k-ubi"
-    external: "gemtek_w1700k-ubi/"
+    external: "tftp://192.168.107.1/gemtek_w1700k-ubi/"
   NetworkService:
     address: "192.168.1.1%vlan107"
     username: "root"
