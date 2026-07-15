@@ -15,9 +15,8 @@ labs:
       - genexis_pulse-ex400
       - tplink_tl-wdr3600-v1
       - bananapi_bpi-r4
-      # - glinet_gl-mt6000
-      # - enterasys_ws-ap3710i
-      # - ignitenet_ss-w2-ac2600
+      - enterasys_ws-ap3710i
+      - ignitenet_ss-w2-ac2600
   labgrid-bastian:
     proxy: labgrid-bastian
     hostkey: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGxdB8NmJRjrS9lztZDKld8OprqY5ELjZ7koQ3b5atLd
@@ -75,6 +74,8 @@ labs:
     devices:
       - glinet_gl-mt6000
       - bananapi_bpi-r4
+      - teltonika_rut976
+      - gemtek_w1700k-ubi
   labgrid-wigyori:
     proxy: labgrid-wigyori
     hostkey: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINoXHDKDcWBZ5mj2GSiWomYzaqjaElFQiqmqM4c8K8Q3

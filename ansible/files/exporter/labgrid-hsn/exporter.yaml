@@ -57,8 +57,7 @@ labgrid-hsn-glinet_gl-mt1300:
     index: 1
   TFTPProvider:
     internal: "/srv/tftp/glinet_gl-mt1300"
-    external: "glinet_gl-mt1300/"
-    external_ip: 192.168.108.1
+    external: "tftp://192.168.108.1/glinet_gl-mt1300/"
   NetworkService:
     address: "192.168.1.1%vlan108"
     username: "root"
@@ -90,8 +89,7 @@ labgrid-hsn-tplink_tl-wr1043nd-v4:
     index: 11
   TFTPProvider:
     internal: "/srv/tftp/tplink_tl-wr1043nd-v4"
-    external: "tplink_tl-wr1043nd-v4/"
-    external_ip: 192.168.112.1
+    external: "tftp://192.168.112.1/tplink_tl-wr1043nd-v4/"
   NetworkService:
     address: "192.168.1.1%vlan112"
     username: "root"

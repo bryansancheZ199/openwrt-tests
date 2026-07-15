@@ -24,7 +24,7 @@ env:
   PYTHONUNBUFFERED: "1"
   PYTEST_ADDOPTS: "--color=yes"
   LG_CONSOLE: "internal"
-  RELEASE: "24.10.2"
+  RELEASE: "25.12.5"
   USER: "labgrid-dev"
 
 jobs:
@@ -41,7 +41,7 @@ jobs:
       authorized: ${{ steps.authz.outputs.authorized }}
     steps:
       - name: Check out repository code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Install yq
         run: |
@@ -167,7 +167,7 @@ jobs:
 
     steps:
       - name: Check out repository code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Install uv
         uses: astral-sh/setup-uv@v7
@@ -205,9 +205,11 @@ jobs:
         env:
           DEVICE: ${{ matrix.device }}
         run: |
-          # workaround until 24.10.x is fixed on tplink_tl-wr1043nd-v3
-          if [ "$DEVICE" = "tplink_tl-wr1043nd-v3" ]; then
-            export RELEASE=23.05.5
+          # A target may pin a specific release for the healthcheck (e.g. a
+          # board that regressed on newer OpenWrt) via openwrt.healthcheck_version.
+          hc_version=$(yq -r '.openwrt.healthcheck_version // ""' targets/$DEVICE.yaml)
+          if [ -n "$hc_version" ] && [ "$hc_version" != "null" ]; then
+            RELEASE="$hc_version"
             echo "RELEASE=${RELEASE}" >> $GITHUB_ENV
           fi
 

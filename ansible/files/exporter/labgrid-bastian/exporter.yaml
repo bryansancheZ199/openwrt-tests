@@ -24,8 +24,7 @@ labgrid-bastian-tplink_tl-wdr4300-v1:
     index: 3
   TFTPProvider:
     internal: "/srv/tftp/tplink_tl-wdr4300-v1/"
-    external: "tplink_tl-wdr4300-v1/"
-    external_ip: "192.168.104.1"
+    external: "tftp://192.168.104.1/tplink_tl-wdr4300-v1/"
   NetworkService:
     address: "192.168.1.1%vlan104"
     username: "root"

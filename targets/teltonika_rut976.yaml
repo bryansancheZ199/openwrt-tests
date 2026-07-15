@@ -1,22 +1,20 @@
 openwrt:
-  name: Enterasys WS-AP3710i
-  target: mpc85xx-p1020
-  profile: enterasys_ws-ap3710i
-  # Newer OpenWrt (24.10+, Linux 6.x) hangs after the kernel loads on this
-  # board's ancient stock U-Boot; 23.05 (Linux 5.15) is the last that boots.
-  # See https://github.com/openwrt/openwrt/issues/23112
-  healthcheck_version: "23.05.5"
+  name: teltonika_rut976
+  target: ramips-mt76x8
+  profile: teltonika_rut976
 targets:
   main:
     features:
+      - wan_port
       - wifi
     resources:
       RemotePlace:
         name: !template "$LG_PLACE"
     drivers:
       PDUDaemonDriver: {}
+      TFTPProviderDriver: {}
       SerialDriver:
-        txdelay: 0.05
+        txdelay: 0.01
       ShellDriver:
         prompt: 'root@[\w()]+:[^ ]+ '
         login_prompt: Please press Enter to activate this console.
@@ -25,22 +23,17 @@ targets:
         post_login_settle_time: 5
         username: root
       UBootDriver:
-        autoboot: "or any other key to stop autoboot"
-        interrupt: "\x08admin\n"
-        prompt: "Boot \\(PRI\\)->"
-        password_prompt: "password:"
-        password: "new2day"
+        prompt: "=>"
         init_commands:
-          - tftp 0x1000000
-        boot_command: >
-          bootm
-
-      TFTPProviderDriver: {}
+          - tftpboot
+        boot_command: bootm $loadaddr
       UBootTFTPStrategy: {}
       SSHDriver:
         connection_timeout: 120.0
         explicit_scp_mode: True
+
 images:
   root: !template $LG_IMAGE
+
 imports:
   - ../strategies/tftpstrategy.py

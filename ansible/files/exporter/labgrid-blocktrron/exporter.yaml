@@ -9,8 +9,7 @@ labgrid-blocktrron-hpe_msm460:
     index: 3
   TFTPProvider:
     internal: "/srv/tftp/hpe_msm460/"
-    external: "hpe_msm460/"
-    external_ip: "192.168.103.1"
+    external: "tftp://192.168.103.1/hpe_msm460/"
   NetworkService:
     address: "192.168.1.1%vlan103"
     username: "root"
@@ -25,8 +24,7 @@ labgrid-blocktrron-tplink_tl-wr842n-v3:
     index: 2
   TFTPProvider:
     internal: "/srv/tftp/tplink_tl-wr842n-v3/"
-    external: "tplink_tl-wr842n-v3/"
-    external_ip: "192.168.102.1"
+    external: "tftp://192.168.102.1/tplink_tl-wr842n-v3/"
   NetworkService:
     address: "192.168.1.1%vlan102"
     username: "root"
