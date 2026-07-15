@@ -2,6 +2,10 @@ openwrt:
   name: Enterasys WS-AP3710i
   target: mpc85xx-p1020
   profile: enterasys_ws-ap3710i
+  # Newer OpenWrt (24.10+, Linux 6.x) hangs after the kernel loads on this
+  # board's ancient stock U-Boot; 23.05 (Linux 5.15) is the last that boots.
+  # See https://github.com/openwrt/openwrt/issues/23112
+  healthcheck_version: "23.05.5"
 targets:
   main:
     features:

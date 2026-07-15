@@ -2,6 +2,7 @@ openwrt:
   name: TP-Link TL-WR1043N/ND v3
   target: ath79-generic
   profile: tplink_tl-wr1043nd-v3
+  healthcheck_version: "23.05.5"
 targets:
   main:
     features:

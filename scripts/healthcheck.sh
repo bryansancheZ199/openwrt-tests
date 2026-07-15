@@ -10,7 +10,8 @@
 #   <device>  device name (a targets/<device>.yaml must exist), e.g. openwrt_one
 #
 # Environment:
-#   RELEASE    OpenWrt release to fetch firmware for (default: 25.12.5).
+#   RELEASE    OpenWrt release to fetch firmware for. Overrides the target's
+#              openwrt.healthcheck_version; falls back to 25.12.5 if neither set.
 #   LG_IMAGE   Skip the download and use this firmware image instead.
 #
 # Requires: uv, yq, jq, curl, wget and a working SSH config for the lab proxy
@@ -18,7 +19,10 @@
 
 set -euo pipefail
 
-RELEASE="${RELEASE:-25.12.5}"
+# Release to fetch firmware for. Precedence: explicit $RELEASE env >
+# the target's openwrt.healthcheck_version > this default.
+DEFAULT_RELEASE="25.12.5"
+RELEASE="${RELEASE:-}"
 
 die() { echo "healthcheck: $*" >&2; exit 1; }
 
@@ -49,6 +53,22 @@ export LG_PROXY="$LAB"
 # NB: LG_ENV is exported only *after* the reservation is in place — the target
 # YAML templates ${LG_PLACE}, so loading it before LG_PLACE is set would fail.
 
+# labgrid reaches the coordinator via an SSH master to LG_PROXY (started with
+# `-MN`, ControlPersist=300s) plus a `-W` ProxyJump child through the coordinator
+# host. On a non-clean exit these orphan (reparent to PID 1) and keep the tunnel
+# open, wedging the coordinator forward for the *next* run until they age out.
+# Tear them down explicitly. The patterns match only labgrid's own tunnels
+# (`-MN`/`-W`), never an interactive `ssh <proxy>`/`ssh <coordinator>` session.
+LG_JUMP="$(ssh -G "$LG_PROXY" 2>/dev/null | awk '/^proxyjump /{print $2}')"
+
+teardown_tunnels() {
+    pkill -f "ssh .*-MN .*${LG_PROXY}" 2>/dev/null || true
+    [ -n "$LG_JUMP" ] && pkill -f "ssh .*-W .*${LG_JUMP}" 2>/dev/null || true
+}
+
+# Clear any tunnels left behind by a previous crashed run before we start.
+teardown_tunnels
+
 # Resolve and download the release firmware unless one was provided explicitly.
 if [ -z "${LG_IMAGE:-}" ]; then
     target=$(yq -r '.openwrt.target' "$TARGET_FILE")
@@ -59,9 +79,14 @@ if [ -z "${LG_IMAGE:-}" ]; then
     [ "$target" != "null" ] || die "$TARGET_FILE has no openwrt.target"
     [ "$profile" != "null" ] || die "$TARGET_FILE has no openwrt.profile"
 
-    upstream_url="https://downloads.openwrt.org/releases/${RELEASE}/targets"
+    # A target may pin a specific release for the healthcheck (e.g. a board that
+    # regressed on newer OpenWrt); an explicit $RELEASE env still overrides it.
+    hc_version=$(yq -r '.openwrt.healthcheck_version // ""' "$TARGET_FILE")
+    release="${RELEASE:-${hc_version:-$DEFAULT_RELEASE}}"
+
+    upstream_url="https://downloads.openwrt.org/releases/${release}/targets"
     profiles_json=$(curl -sf "$upstream_url/${target/-//}/profiles.json") \
-        || die "failed to fetch profiles.json for $target ($RELEASE)"
+        || die "failed to fetch profiles.json for $target ($release)"
 
     if [ -n "$image_fs" ]; then
         firmware_name=$(echo "$profiles_json" | jq -r \
@@ -84,7 +109,7 @@ if [ -z "${LG_IMAGE:-}" ]; then
     if [ -f "$final_path" ]; then
         echo "healthcheck: reusing cached firmware $final_path"
     else
-        echo "healthcheck: downloading $firmware_name ($RELEASE)"
+        echo "healthcheck: downloading $firmware_name ($release)"
         wget -q "$upstream_url/${target/-//}/$firmware_name" \
             --output-document "$download_dir/$firmware_name" \
             || die "failed to download $firmware_name"
@@ -108,6 +133,7 @@ cleanup() {
     uv run labgrid-client power off || true
     uv run labgrid-client unlock || true
     uv run labgrid-client cancel-reservation "$LG_TOKEN" || true
+    teardown_tunnels
 }
 trap cleanup EXIT
 
