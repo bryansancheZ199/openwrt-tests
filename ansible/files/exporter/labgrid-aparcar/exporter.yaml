@@ -30,7 +30,7 @@ labgrid-aparcar-bananapi_bpi-r4-lite:
 
 labgrid-aparcar-genexis_pulse-ex400:
   NetworkService:
-    address: 192.168.1.1%vlan106
+    address: 192.168.1.1%vlan105
     username: root
   PDUDaemonPort:
     host: localhost:16421
@@ -60,7 +60,7 @@ labgrid-aparcar-tplink_tl-wdr3600-v1:
 
 labgrid-aparcar-bananapi_bpi-r4:
   NetworkService:
-    address: 192.168.1.1%vlan110
+    address: 192.168.1.1%vlan109
     username: root
   PDUDaemonPort:
     host: localhost:16421
@@ -97,7 +97,7 @@ labgrid-aparcar-enterasys_ws-ap3710i:
     index: 12
     pdu: 192.168.128.2
   TFTPProvider:
-    external: enterasys_ws-ap3710i/
+    external: tftp://192.168.112.1/enterasys_ws-ap3710i/
     internal: /srv/tftp/enterasys_ws-ap3710i/
   USBSerialPort:
     match:
