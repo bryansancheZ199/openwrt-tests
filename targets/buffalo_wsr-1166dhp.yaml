@@ -1,5 +1,5 @@
 openwrt:
-  name: Buffalo
+  name: Buffalo WSR-1166DHP
   target: ramips-mt7621
   profile: buffalo_wsr-1166dhp
   snapshots_only: false

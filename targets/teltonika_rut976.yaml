@@ -1,5 +1,5 @@
 openwrt:
-  name: teltonika_rut976
+  name: Teltonika RUT976
   target: ramips-mt76x8
   profile: teltonika_rut976
 targets:

@@ -1,3 +1,7 @@
+openwrt:
+  name: Raspberry Pi 3A+/3B/3B+/CM3/Zero2/Zero2W/CM0 (64bit)
+  target: bcm27xx-bcm2710
+  profile: rpi-3
 targets:
   main:
     resources:
