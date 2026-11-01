@@ -1,5 +1,5 @@
 openwrt:
-  name: gemtek_w1700k-ubi
+  name: Gemtek W1700K UBI / CenturyLink W1700K UBI
   target: airoha-an7581
   profile: gemtek_w1700k-ubi
 targets:

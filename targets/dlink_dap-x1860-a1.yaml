@@ -1,5 +1,5 @@
 openwrt:
-  name: dlink_dap-x1860-a1
+  name: D-Link DAP-X1860 A1
   target: ramips-mt7621
   profile: dlink_dap-x1860-a1
 targets:
